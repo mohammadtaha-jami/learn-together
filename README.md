@@ -74,7 +74,7 @@ Reading a technical book as a group is hard when nobody knows who read what, or 
 ### Installation
 
 ```bash
-git clone https://github.com/YOUR_ORG/learn-together.git
+git clone https://github.com/mohammadtaha-jami/learn-together.git
 cd learn-together
 
 cp .env.example .env
