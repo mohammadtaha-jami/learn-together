@@ -1,0 +1,45 @@
+{
+  "topic": {
+    "titleEn": "Sample Learning Path",
+    "titleFa": "نمونه مسیر یادگیری",
+    "description": "یک فایل کوچک برای تست بارگذاری — ساختار را کپی کنید و گسترش دهید."
+  },
+  "parts": [
+    {
+      "partLabel": "بخش اول — مبانی",
+      "chapters": [
+        {
+          "number": "Ch.1",
+          "titleEn": "Introduction",
+          "titleFa": "مقدمه",
+          "sections": [
+            {
+              "titleEn": "What you will learn",
+              "titleFa": "چه چیزهایی یاد می‌گیرید",
+              "subsections": []
+            },
+            {
+              "titleEn": "Core concepts",
+              "titleFa": "مفاهیم پایه",
+              "subsections": [
+                "Concept A",
+                "Concept B"
+              ]
+            }
+          ]
+        },
+        {
+          "number": "Ch.2",
+          "titleEn": "Going deeper",
+          "titleFa": "عمیق‌تر",
+          "sections": [
+            {
+              "titleEn": "Single leaf section (no children)",
+              "titleFa": "یک مبحث بدون زیرمبحث"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
