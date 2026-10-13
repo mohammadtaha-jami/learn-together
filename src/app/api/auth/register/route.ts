@@ -36,7 +36,8 @@ export async function POST(request: Request) {
     });
 
     return NextResponse.json({ ok: true });
-  } catch {
+  } catch (err) {
+    console.error("[register]", err);
     return NextResponse.json({ error: "خطای سرور" }, { status: 500 });
   }
 }
