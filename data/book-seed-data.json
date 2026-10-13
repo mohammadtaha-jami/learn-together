@@ -1,0 +1,923 @@
+[
+  {
+    "part": "📘 Part I Foundations — فصل‌های ۱ تا ۸",
+    "chapters": [
+      {
+        "number": "Ch.1",
+        "sections": [
+          {
+            "subsections": [],
+            "title_en": "Defining Software Architecture",
+            "title_fa": "تعریف معماری نرم‌افزار"
+          },
+          {
+            "subsections": [
+              "Make Architecture Decisions",
+              "Continually Analyze the Architecture",
+              "Keep Current with Latest Trends",
+              "Ensure Compliance with Decisions",
+              "Diverse Exposure and Experience",
+              "Have Business Domain Knowledge",
+              "Possess Interpersonal Skills",
+              "Understand and Navigate Politics"
+            ],
+            "title_en": "Expectations of an Architect",
+            "title_fa": "انتظارات از معمار"
+          },
+          {
+            "subsections": [
+              "Operations/DevOps",
+              "Process",
+              "Data"
+            ],
+            "title_en": "Intersection of Architecture and Engineering Practices",
+            "title_fa": ""
+          },
+          {
+            "subsections": [],
+            "title_en": "Laws of Software Architecture",
+            "title_fa": "قوانین معماری"
+          }
+        ],
+        "title_en": "Introduction",
+        "title_fa": "مقدمه"
+      },
+      {
+        "number": "Ch.2",
+        "sections": [
+          {
+            "subsections": [],
+            "title_en": "Architecture Versus Design",
+            "title_fa": ""
+          },
+          {
+            "subsections": [],
+            "title_en": "Technical Breadth",
+            "title_fa": "عرض تکنیکی"
+          },
+          {
+            "subsections": [],
+            "title_en": "Analyzing Trade-Offs",
+            "title_fa": "تحلیل مصالحه‌ها"
+          },
+          {
+            "subsections": [],
+            "title_en": "Understanding Business Drivers",
+            "title_fa": ""
+          },
+          {
+            "subsections": [],
+            "title_en": "Balancing Architecture and Hands-On Coding",
+            "title_fa": ""
+          }
+        ],
+        "title_en": "Architectural Thinking",
+        "title_fa": "تفکر معماری"
+      },
+      {
+        "number": "Ch.3",
+        "sections": [
+          {
+            "subsections": [],
+            "title_en": "Definition",
+            "title_fa": "تعریف"
+          },
+          {
+            "subsections": [
+              "Cohesion — همبستگی",
+              "Coupling — اتصال",
+              "Abstractness, Instability, and Distance from the Main Sequence",
+              "Distance from the Main Sequence",
+              "Connascence — همزادی",
+              "Unifying Coupling and Connascence Metrics"
+            ],
+            "title_en": "Measuring Modularity",
+            "title_fa": "اندازه‌گیری"
+          },
+          {
+            "subsections": [],
+            "title_en": "From Modules to Components",
+            "title_fa": ""
+          }
+        ],
+        "title_en": "Modularity",
+        "title_fa": "ماژولاریتی"
+      },
+      {
+        "number": "Ch.4",
+        "sections": [
+          {
+            "subsections": [
+              "Operational Architecture Characteristics",
+              "Structural Architecture Characteristics",
+              "Cross-Cutting Architecture Characteristics"
+            ],
+            "title_en": "Architectural Characteristics (Partially) Listed",
+            "title_fa": ""
+          },
+          {
+            "subsections": [],
+            "title_en": "Trade-Offs and Least Worst Architecture",
+            "title_fa": ""
+          }
+        ],
+        "title_en": "Architecture Characteristics Defined",
+        "title_fa": ""
+      },
+      {
+        "number": "Ch.5",
+        "sections": [
+          {
+            "subsections": [],
+            "title_en": "Extracting from Domain Concerns",
+            "title_fa": ""
+          },
+          {
+            "subsections": [],
+            "title_en": "Extracting from Requirements",
+            "title_fa": ""
+          },
+          {
+            "subsections": [
+              "Explicit Characteristics",
+              "Implicit Characteristics"
+            ],
+            "title_en": "Case Study: Silicon Sandwiches",
+            "title_fa": ""
+          }
+        ],
+        "title_en": "Identifying Architectural Characteristics",
+        "title_fa": ""
+      },
+      {
+        "number": "Ch.6",
+        "sections": [
+          {
+            "subsections": [
+              "Operational Measures",
+              "Structural Measures",
+              "Process Measures"
+            ],
+            "title_en": "Measuring Architecture Characteristics",
+            "title_fa": ""
+          },
+          {
+            "subsections": [
+              "Governing Architecture Characteristics",
+              "Fitness Functions"
+            ],
+            "title_en": "Governance and Fitness Functions",
+            "title_fa": ""
+          }
+        ],
+        "title_en": "Measuring and Governing Architecture Characteristics",
+        "title_fa": ""
+      },
+      {
+        "number": "Ch.7",
+        "sections": [
+          {
+            "subsections": [],
+            "title_en": "Coupling and Connascence",
+            "title_fa": ""
+          },
+          {
+            "subsections": [],
+            "title_en": "Architectural Quanta and Granularity",
+            "title_fa": ""
+          },
+          {
+            "subsections": [],
+            "title_en": "Case Study: Going, Going, Gone",
+            "title_fa": ""
+          }
+        ],
+        "title_en": "Scope of Architecture Characteristics",
+        "title_fa": ""
+      },
+      {
+        "number": "Ch.8",
+        "sections": [
+          {
+            "subsections": [],
+            "title_en": "Component Scope",
+            "title_fa": ""
+          },
+          {
+            "subsections": [
+              "Architecture Partitioning",
+              "Case Study: Silicon Sandwiches Partitioning"
+            ],
+            "title_en": "Architect Role",
+            "title_fa": ""
+          },
+          {
+            "subsections": [],
+            "title_en": "Developer Role",
+            "title_fa": ""
+          },
+          {
+            "subsections": [
+              "Identifying Initial Components",
+              "Assign Requirements to Components",
+              "Analyze Roles and Responsibilities",
+              "Analyze Architecture Characteristics",
+              "Restructure Components"
+            ],
+            "title_en": "Component Identification Flow",
+            "title_fa": ""
+          },
+          {
+            "subsections": [],
+            "title_en": "Component Granularity",
+            "title_fa": ""
+          },
+          {
+            "subsections": [],
+            "title_en": "Component Design / Discovering Components",
+            "title_fa": ""
+          },
+          {
+            "subsections": [],
+            "title_en": "Case Study: Going, Going, Gone",
+            "title_fa": ""
+          },
+          {
+            "subsections": [],
+            "title_en": "Architecture Quantum Redux: Monolithic vs Distributed",
+            "title_fa": ""
+          }
+        ],
+        "title_en": "Component-Based Thinking",
+        "title_fa": ""
+      }
+    ]
+  },
+  {
+    "part": "📗 Part II Architecture Styles — فصل‌های ۹ تا ۱۸",
+    "chapters": [
+      {
+        "number": "Ch.9",
+        "sections": [
+          {
+            "subsections": [
+              "Big Ball of Mud",
+              "Unitary Architecture",
+              "Client/Server"
+            ],
+            "title_en": "Fundamental Patterns",
+            "title_fa": ""
+          },
+          {
+            "subsections": [
+              "Fallacy #1: The Network Is Reliable",
+              "Fallacy #2: Latency Is Zero",
+              "Fallacy #3: Bandwidth Is Infinite",
+              "Fallacy #4: The Network Is Secure",
+              "Fallacy #5: The Topology Never Changes",
+              "Fallacy #6: There Is Only One Administrator",
+              "Fallacy #7: Transport Cost Is Zero",
+              "Fallacy #8: The Network Is Homogeneous"
+            ],
+            "title_en": "Monolithic Versus Distributed Architectures",
+            "title_fa": ""
+          },
+          {
+            "subsections": [],
+            "title_en": "Other Distributed Considerations",
+            "title_fa": ""
+          }
+        ],
+        "title_en": "Foundations",
+        "title_fa": "پایه‌های سبک‌های معماری"
+      },
+      {
+        "number": "Ch.10",
+        "sections": [
+          {
+            "subsections": [],
+            "title_en": "Topology",
+            "title_fa": ""
+          },
+          {
+            "subsections": [],
+            "title_en": "Layers of Isolation",
+            "title_fa": ""
+          },
+          {
+            "subsections": [],
+            "title_en": "Adding Layers",
+            "title_fa": ""
+          },
+          {
+            "subsections": [],
+            "title_en": "Other Considerations",
+            "title_fa": ""
+          },
+          {
+            "subsections": [],
+            "title_en": "Why Use This Architecture Style",
+            "title_fa": ""
+          },
+          {
+            "subsections": [],
+            "title_en": "Architecture Characteristics Ratings",
+            "title_fa": ""
+          }
+        ],
+        "title_en": "Layered Architecture Style",
+        "title_fa": ""
+      },
+      {
+        "number": "Ch.11",
+        "sections": [
+          {
+            "subsections": [
+              "Pipes",
+              "Filters"
+            ],
+            "title_en": "Topology",
+            "title_fa": ""
+          },
+          {
+            "subsections": [],
+            "title_en": "Example",
+            "title_fa": ""
+          },
+          {
+            "subsections": [],
+            "title_en": "Architecture Characteristics Ratings",
+            "title_fa": ""
+          }
+        ],
+        "title_en": "Pipeline Architecture Style",
+        "title_fa": ""
+      },
+      {
+        "number": "Ch.12",
+        "sections": [
+          {
+            "subsections": [
+              "Core System",
+              "Plug-In Components"
+            ],
+            "title_en": "Topology",
+            "title_fa": ""
+          },
+          {
+            "subsections": [],
+            "title_en": "Registry",
+            "title_fa": ""
+          },
+          {
+            "subsections": [],
+            "title_en": "Contracts",
+            "title_fa": ""
+          },
+          {
+            "subsections": [],
+            "title_en": "Examples and Use Cases",
+            "title_fa": ""
+          },
+          {
+            "subsections": [],
+            "title_en": "Architecture Characteristics Ratings",
+            "title_fa": ""
+          }
+        ],
+        "title_en": "Microkernel Architecture Style",
+        "title_fa": ""
+      },
+      {
+        "number": "Ch.13",
+        "sections": [
+          {
+            "subsections": [],
+            "title_en": "Topology",
+            "title_fa": ""
+          },
+          {
+            "subsections": [],
+            "title_en": "Topology Variants",
+            "title_fa": ""
+          },
+          {
+            "subsections": [],
+            "title_en": "Service Design and Granularity",
+            "title_fa": ""
+          },
+          {
+            "subsections": [],
+            "title_en": "Database Partitioning",
+            "title_fa": ""
+          },
+          {
+            "subsections": [],
+            "title_en": "Example Architecture",
+            "title_fa": ""
+          },
+          {
+            "subsections": [],
+            "title_en": "Architecture Characteristics Ratings",
+            "title_fa": ""
+          },
+          {
+            "subsections": [],
+            "title_en": "When to Use This Architecture Style",
+            "title_fa": ""
+          }
+        ],
+        "title_en": "Service-Based Architecture Style",
+        "title_fa": ""
+      },
+      {
+        "number": "Ch.14",
+        "sections": [
+          {
+            "subsections": [],
+            "title_en": "Topology",
+            "title_fa": ""
+          },
+          {
+            "subsections": [],
+            "title_en": "Broker Topology",
+            "title_fa": ""
+          },
+          {
+            "subsections": [],
+            "title_en": "Mediator Topology",
+            "title_fa": ""
+          },
+          {
+            "subsections": [],
+            "title_en": "Asynchronous Capabilities",
+            "title_fa": ""
+          },
+          {
+            "subsections": [],
+            "title_en": "Error Handling",
+            "title_fa": ""
+          },
+          {
+            "subsections": [],
+            "title_en": "Preventing Data Loss",
+            "title_fa": ""
+          },
+          {
+            "subsections": [],
+            "title_en": "Broadcast Capabilities",
+            "title_fa": ""
+          },
+          {
+            "subsections": [],
+            "title_en": "Request-Reply",
+            "title_fa": ""
+          },
+          {
+            "subsections": [],
+            "title_en": "Choosing Between Request-Based and Event-Based",
+            "title_fa": ""
+          },
+          {
+            "subsections": [],
+            "title_en": "Hybrid Event-Driven Architectures",
+            "title_fa": ""
+          },
+          {
+            "subsections": [],
+            "title_en": "Architecture Characteristics Ratings",
+            "title_fa": ""
+          }
+        ],
+        "title_en": "Event-Driven Architecture Style",
+        "title_fa": ""
+      },
+      {
+        "number": "Ch.15",
+        "sections": [
+          {
+            "subsections": [
+              "Processing Unit",
+              "Virtualized Middleware",
+              "Data Pumps",
+              "Data Writers",
+              "Data Readers"
+            ],
+            "title_en": "General Topology",
+            "title_fa": ""
+          },
+          {
+            "subsections": [],
+            "title_en": "Data Collisions",
+            "title_fa": ""
+          },
+          {
+            "subsections": [],
+            "title_en": "Cloud Versus On-Premises Implementations",
+            "title_fa": ""
+          },
+          {
+            "subsections": [],
+            "title_en": "Replicated Versus Distributed Caching",
+            "title_fa": ""
+          },
+          {
+            "subsections": [],
+            "title_en": "Near-Cache Considerations",
+            "title_fa": ""
+          },
+          {
+            "subsections": [],
+            "title_en": "Implementation Example: Concert Ticketing System",
+            "title_fa": ""
+          },
+          {
+            "subsections": [],
+            "title_en": "Implementation Example: Online Auction System",
+            "title_fa": ""
+          },
+          {
+            "subsections": [],
+            "title_en": "Architecture Characteristics Ratings",
+            "title_fa": ""
+          }
+        ],
+        "title_en": "Space-Based Architecture Style",
+        "title_fa": ""
+      },
+      {
+        "number": "Ch.16",
+        "sections": [
+          {
+            "subsections": [],
+            "title_en": "History and Philosophy",
+            "title_fa": ""
+          },
+          {
+            "subsections": [],
+            "title_en": "Topology",
+            "title_fa": ""
+          },
+          {
+            "subsections": [
+              "Business Services",
+              "Enterprise Services",
+              "Application Services",
+              "Infrastructure Services",
+              "Orchestration Engine",
+              "Message Flow"
+            ],
+            "title_en": "Taxonomy",
+            "title_fa": ""
+          },
+          {
+            "subsections": [],
+            "title_en": "Reuse…and Coupling",
+            "title_fa": ""
+          },
+          {
+            "subsections": [],
+            "title_en": "Architecture Characteristics Ratings",
+            "title_fa": ""
+          }
+        ],
+        "title_en": "Orchestration-Driven Service-Oriented Architecture",
+        "title_fa": ""
+      },
+      {
+        "number": "Ch.17",
+        "sections": [
+          {
+            "subsections": [],
+            "title_en": "History",
+            "title_fa": ""
+          },
+          {
+            "subsections": [],
+            "title_en": "Topology",
+            "title_fa": ""
+          },
+          {
+            "subsections": [],
+            "title_en": "Distributed",
+            "title_fa": ""
+          },
+          {
+            "subsections": [
+              "Granularity",
+              "Data Isolation"
+            ],
+            "title_en": "Bounded Context",
+            "title_fa": ""
+          },
+          {
+            "subsections": [],
+            "title_en": "API Layer",
+            "title_fa": ""
+          },
+          {
+            "subsections": [],
+            "title_en": "Operational Reuse",
+            "title_fa": ""
+          },
+          {
+            "subsections": [],
+            "title_en": "Frontends",
+            "title_fa": ""
+          },
+          {
+            "subsections": [
+              "Choreography and Orchestration",
+              "Transactions and Sagas"
+            ],
+            "title_en": "Communication",
+            "title_fa": ""
+          },
+          {
+            "subsections": [],
+            "title_en": "Architecture Characteristics Ratings",
+            "title_fa": ""
+          },
+          {
+            "subsections": [],
+            "title_en": "Additional References",
+            "title_fa": ""
+          }
+        ],
+        "title_en": "Microservices Architecture",
+        "title_fa": ""
+      },
+      {
+        "number": "Ch.18",
+        "sections": [
+          {
+            "subsections": [],
+            "title_en": "Shifting \"Fashion\" in Architecture",
+            "title_fa": ""
+          },
+          {
+            "subsections": [],
+            "title_en": "Decision Criteria",
+            "title_fa": ""
+          },
+          {
+            "subsections": [
+              "Modular Monolith",
+              "Microkernel"
+            ],
+            "title_en": "Monolith Case Study: Silicon Sandwiches",
+            "title_fa": ""
+          },
+          {
+            "subsections": [],
+            "title_en": "Distributed Case Study: Going, Going, Gone",
+            "title_fa": ""
+          }
+        ],
+        "title_en": "Choosing the Appropriate Architecture Style",
+        "title_fa": ""
+      }
+    ]
+  },
+  {
+    "part": "📙 Part III Techniques and Soft Skills — فصل‌های ۱۹ تا ۲۴",
+    "chapters": [
+      {
+        "number": "Ch.19",
+        "sections": [
+          {
+            "subsections": [
+              "Covering Your Assets Anti-Pattern",
+              "Groundhog Day Anti-Pattern",
+              "Email-Driven Architecture Anti-Pattern"
+            ],
+            "title_en": "Architecture Decision Anti-Patterns",
+            "title_fa": ""
+          },
+          {
+            "subsections": [],
+            "title_en": "Architecturally Significant",
+            "title_fa": ""
+          },
+          {
+            "subsections": [
+              "Basic Structure",
+              "Storing ADRs",
+              "ADRs as Documentation",
+              "Using ADRs for Standards",
+              "Example"
+            ],
+            "title_en": "Architecture Decision Records (ADRs)",
+            "title_fa": ""
+          }
+        ],
+        "title_en": "Architecture Decisions",
+        "title_fa": ""
+      },
+      {
+        "number": "Ch.20",
+        "sections": [
+          {
+            "subsections": [],
+            "title_en": "Risk Matrix",
+            "title_fa": ""
+          },
+          {
+            "subsections": [],
+            "title_en": "Risk Assessments",
+            "title_fa": ""
+          },
+          {
+            "subsections": [
+              "Identification",
+              "Consensus"
+            ],
+            "title_en": "Risk Storming",
+            "title_fa": ""
+          },
+          {
+            "subsections": [],
+            "title_en": "Agile Story Risk Analysis",
+            "title_fa": ""
+          },
+          {
+            "subsections": [],
+            "title_en": "Risk Storming Examples: Availability",
+            "title_fa": ""
+          },
+          {
+            "subsections": [],
+            "title_en": "Risk Storming Examples: Elasticity",
+            "title_fa": ""
+          },
+          {
+            "subsections": [],
+            "title_en": "Risk Storming Examples: Security",
+            "title_fa": ""
+          }
+        ],
+        "title_en": "Analyzing Architecture Risk",
+        "title_fa": ""
+      },
+      {
+        "number": "Ch.21",
+        "sections": [
+          {
+            "subsections": [
+              "Tools",
+              "Diagramming Standards: UML, C4, and ArchiMate",
+              "Diagram Guidelines"
+            ],
+            "title_en": "Diagramming",
+            "title_fa": ""
+          },
+          {
+            "subsections": [
+              "Manipulating Time",
+              "Incremental Builds",
+              "Infodecks Versus Presentations",
+              "Slides Are Half of the Story",
+              "Invisibility"
+            ],
+            "title_en": "Presenting",
+            "title_fa": ""
+          }
+        ],
+        "title_en": "Diagramming and Presenting Architecture",
+        "title_fa": ""
+      },
+      {
+        "number": "Ch.22",
+        "sections": [
+          {
+            "subsections": [],
+            "title_en": "Team Boundaries",
+            "title_fa": ""
+          },
+          {
+            "subsections": [
+              "Control Freak",
+              "Armchair Architect",
+              "Effective Architect"
+            ],
+            "title_en": "Architect Personalities",
+            "title_fa": ""
+          },
+          {
+            "subsections": [],
+            "title_en": "How Much Control?",
+            "title_fa": ""
+          },
+          {
+            "subsections": [],
+            "title_en": "Team Warning Signs",
+            "title_fa": ""
+          },
+          {
+            "subsections": [
+              "Developer Code Completion Checklist",
+              "Unit and Functional Testing Checklist",
+              "Software Release Checklist"
+            ],
+            "title_en": "Leveraging Checklists",
+            "title_fa": ""
+          },
+          {
+            "subsections": [],
+            "title_en": "Providing Guidance",
+            "title_fa": ""
+          },
+          {
+            "subsections": [],
+            "title_en": "Summary",
+            "title_fa": ""
+          }
+        ],
+        "title_en": "Making Teams Effective",
+        "title_fa": ""
+      },
+      {
+        "number": "Ch.23",
+        "sections": [
+          {
+            "subsections": [
+              "Negotiating with Business Stakeholders",
+              "Negotiating with Other Architects",
+              "Negotiating with Developers"
+            ],
+            "title_en": "Negotiation and Facilitation",
+            "title_fa": ""
+          },
+          {
+            "subsections": [
+              "The 4 C's of Architecture",
+              "Be Pragmatic, Yet Visionary",
+              "Leading Teams by Example"
+            ],
+            "title_en": "The Software Architect as a Leader",
+            "title_fa": ""
+          },
+          {
+            "subsections": [],
+            "title_en": "Integrating with the Development Team",
+            "title_fa": ""
+          },
+          {
+            "subsections": [],
+            "title_en": "Summary",
+            "title_fa": ""
+          }
+        ],
+        "title_en": "Negotiation and Leadership Skills",
+        "title_fa": ""
+      },
+      {
+        "number": "Ch.24",
+        "sections": [
+          {
+            "subsections": [],
+            "title_en": "The 20-Minute Rule",
+            "title_fa": ""
+          },
+          {
+            "subsections": [
+              "The ThoughtWorks Technology Radar",
+              "Open Source Visualization Bits"
+            ],
+            "title_en": "Developing a Personal Radar",
+            "title_fa": ""
+          },
+          {
+            "subsections": [],
+            "title_en": "Using Social Media",
+            "title_fa": ""
+          },
+          {
+            "subsections": [],
+            "title_en": "Parting Words of Advice",
+            "title_fa": ""
+          },
+          {
+            "subsections": [],
+            "title_en": "سؤالات خودارزیابی فصل موردنظر",
+            "title_fa": ""
+          }
+        ],
+        "title_en": "Developing a Career Path",
+        "title_fa": ""
+      },
+      {
+        "number": "App.",
+        "sections": [
+          {
+            "subsections": [],
+            "title_en": "سؤالات خودارزیابی فصل موردنظر",
+            "title_fa": ""
+          }
+        ],
+        "title_en": "Self-Assessment Questions",
+        "title_fa": "سؤالات خودارزیابی"
+      }
+    ]
+  }
+]
