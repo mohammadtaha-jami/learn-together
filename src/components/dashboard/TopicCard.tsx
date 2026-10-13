@@ -12,9 +12,15 @@ export function TopicCard({ topic }: { topic: TopicSummary }) {
     <Link href={`/dashboard/topics/${topic.id}`} className="group block">
       <Card className="h-full transition group-hover:-translate-y-0.5 group-hover:shadow-float">
         <div className="flex items-start justify-between gap-3">
-          <Badge variant={isTeam ? "team" : "personal"}>
-            {isTeam ? <Users className="h-3.5 w-3.5" /> : <User className="h-3.5 w-3.5" />}
-            {isTeam ? "تیمی" : "شخصی"}
+          <Badge variant={isTeam ? "team" : "personal"} className="max-w-[75%]">
+            {isTeam ? (
+              <Users className="h-3.5 w-3.5 shrink-0" />
+            ) : (
+              <User className="h-3.5 w-3.5 shrink-0" />
+            )}
+            <span className="truncate">
+              {isTeam ? `تیم ${topic.teamName ?? ""}`.trim() : "شخصی"}
+            </span>
           </Badge>
           <ChevronLeft className="h-5 w-5 text-text-muted transition group-hover:-translate-x-1" />
         </div>
