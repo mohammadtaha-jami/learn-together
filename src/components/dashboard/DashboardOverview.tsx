@@ -26,6 +26,7 @@ import { ProgressRing } from "@/components/ui/ProgressRing";
 import { Skeleton } from "@/components/ui/Skeleton";
 import { StatusButton, StatusChip } from "@/components/ui/StatusButton";
 import { fa, nextStatus } from "@/lib/learning/status";
+import { useActiveTeam } from "@/components/team/ActiveTeamProvider";
 import { useOverview } from "@/lib/learning/use-overview";
 
 const HistoryChart = dynamic(
@@ -53,7 +54,8 @@ function Tile({
 
 export function DashboardOverview() {
   const { data: session } = useSession();
-  const { data, isLoading, isError } = useOverview();
+  const { activeTeamId } = useActiveTeam();
+  const { data, isLoading, isError } = useOverview(activeTeamId);
   const qc = useQueryClient();
   const [overrides, setOverrides] = useState<Record<string, ProgressStatus>>({});
 

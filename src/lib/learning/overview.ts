@@ -8,6 +8,7 @@ export type TopicSummary = {
   titleFa: string | null;
   description: string | null;
   scope: TopicScope;
+  teamId: string | null;
   teamName: string | null;
   chapterCount: number;
   total: number;
@@ -56,12 +57,21 @@ function dayKey(date: Date, tzOffset: number) {
   return new Date(date.getTime() - tzOffset * 60_000).toISOString().slice(0, 10);
 }
 
-async function loadTopics(userId: string, scope?: TopicScope | null) {
+async function loadTopics(
+  userId: string,
+  scope?: TopicScope | null,
+  teamId?: string | null,
+) {
   const memberships = await prisma.teamMember.findMany({
     where: { userId },
     select: { teamId: true },
   });
   const teamIds = memberships.map((m) => m.teamId);
+
+  const teamTopicWhere =
+    scope === "TEAM" && teamId
+      ? { scope: "TEAM" as const, teamId }
+      : { scope: "TEAM" as const, teamId: { in: teamIds } };
 
   return prisma.topic.findMany({
     where: {
@@ -70,7 +80,7 @@ async function loadTopics(userId: string, scope?: TopicScope | null) {
         {
           OR: [
             { scope: "PERSONAL", ownerId: userId },
-            { scope: "TEAM", teamId: { in: teamIds } },
+            ...(teamIds.length ? [teamTopicWhere] : []),
           ],
         },
       ],
@@ -109,8 +119,9 @@ function leavesOf(topic: LoadedTopic) {
 export async function getTopicSummaries(
   userId: string,
   scope?: TopicScope | null,
+  teamId?: string | null,
 ): Promise<TopicSummary[]> {
-  const topics = await loadTopics(userId, scope);
+  const topics = await loadTopics(userId, scope, teamId);
   const leafIds = topics.flatMap((t) => leavesOf(t).map((l) => l.id));
   const progress = await prisma.progress.findMany({
     where: { userId, sectionId: { in: leafIds } },
@@ -139,6 +150,7 @@ function summarize(
     titleFa: t.titleFa,
     description: t.description,
     scope: t.scope,
+    teamId: t.teamId,
     teamName: t.team?.name ?? null,
     chapterCount: t.chapters.length,
     total: leaves.length,
@@ -151,6 +163,7 @@ function summarize(
 export async function buildOverview(
   userId: string,
   tzOffset: number,
+  activeTeamId?: string | null,
 ): Promise<Overview> {
   const topics = await loadTopics(userId);
   const leafIds = topics.flatMap((t) => leavesOf(t).map((l) => l.id));
@@ -165,15 +178,24 @@ export async function buildOverview(
       where: { userId, status: "DONE", completedAt: { gte: since } },
       select: { completedAt: true },
     }),
-    prisma.teamMember.findFirst({
-      where: { userId },
-      orderBy: { joinedAt: "asc" },
-      include: {
-        team: {
-          include: { members: { include: { user: { select: { id: true, name: true } } } } },
-        },
-      },
-    }),
+    activeTeamId
+      ? prisma.teamMember.findUnique({
+          where: { userId_teamId: { userId, teamId: activeTeamId } },
+          include: {
+            team: {
+              include: { members: { include: { user: { select: { id: true, name: true } } } } },
+            },
+          },
+        })
+      : prisma.teamMember.findFirst({
+          where: { userId },
+          orderBy: { joinedAt: "asc" },
+          include: {
+            team: {
+              include: { members: { include: { user: { select: { id: true, name: true } } } } },
+            },
+          },
+        }),
   ]);
 
   const statusById = new Map(progress.map((p) => [p.sectionId, p.status]));
@@ -240,7 +262,7 @@ export async function buildOverview(
 
   // Team
   let team: Overview["team"] = null;
-  if (membership) {
+  if (membership?.team) {
     const teamTopics = topics.filter((t) => t.teamId === membership.teamId);
     const teamLeaves = teamTopics.flatMap((t) => leavesOf(t).map((l) => l.id));
     const grouped = teamLeaves.length

@@ -12,21 +12,30 @@ import type { TopicSummary } from "@/lib/learning/overview";
 
 export function TopicList({
   scope,
+  teamId,
   canCreate = true,
 }: {
   scope: TopicScope;
+  teamId?: string | null;
   canCreate?: boolean;
 }) {
   const { data, isLoading } = useQuery({
-    queryKey: ["topics", scope],
+    queryKey: ["topics", scope, teamId ?? ""],
     queryFn: async () => {
-      const res = await fetch(`/api/topics?scope=${scope}`);
+      const q = new URLSearchParams({ scope });
+      if (teamId) q.set("teamId", teamId);
+      const res = await fetch(`/api/topics?${q}`);
       if (!res.ok) throw new Error("failed");
       return (await res.json()) as TopicSummary[];
     },
+    enabled: scope !== "TEAM" || !!teamId,
   });
 
   const newHref = `/dashboard/topics/new?scope=${scope}`;
+
+  if (scope === "TEAM" && !teamId) {
+    return null;
+  }
 
   if (isLoading) {
     return (

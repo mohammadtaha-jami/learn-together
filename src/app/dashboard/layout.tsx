@@ -1,5 +1,6 @@
 import { Backdrop } from "@/components/layout/Backdrop";
 import { DashboardShell } from "@/components/layout/DashboardShell";
+import { ActiveTeamProvider } from "@/components/team/ActiveTeamProvider";
 
 export default function DashboardLayout({
   children,
@@ -9,7 +10,9 @@ export default function DashboardLayout({
   return (
     <>
       <Backdrop />
-      <DashboardShell>{children}</DashboardShell>
+      <ActiveTeamProvider>
+        <DashboardShell>{children}</DashboardShell>
+      </ActiveTeamProvider>
     </>
   );
 }

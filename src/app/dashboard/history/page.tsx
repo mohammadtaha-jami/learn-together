@@ -6,6 +6,7 @@ import { PageHeader } from "@/components/layout/PageHeader";
 import { Card, CardTitle } from "@/components/ui/Card";
 import { Skeleton } from "@/components/ui/Skeleton";
 import { fa } from "@/lib/learning/status";
+import { useActiveTeam } from "@/components/team/ActiveTeamProvider";
 import { useOverview } from "@/lib/learning/use-overview";
 
 const HistoryChart = dynamic(
@@ -34,7 +35,8 @@ function Stat({
 }
 
 export default function HistoryPage() {
-  const { data, isLoading } = useOverview();
+  const { activeTeamId } = useActiveTeam();
+  const { data, isLoading } = useOverview(activeTeamId);
 
   return (
     <div>
