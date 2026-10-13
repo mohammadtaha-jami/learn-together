@@ -2,22 +2,55 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Colors are stored as RGB channels so Tailwind opacity modifiers work. */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --c-surface: 244 245 251;
+  --c-raised: 255 255 255;
+  --c-overlay: 238 240 248;
+  --c-text: 22 25 36;
+  --c-muted: 100 106 135;
+  --c-border: 226 229 242;
+  --c-primary: 108 99 255;
+  --c-primary-deep: 56 46 180;
+  --c-accent: 0 168 135;
+  --c-idle: 160 166 182;
+  --c-progress: 217 150 0;
+  --c-done: 16 160 110;
+  --c-danger: 225 29 72;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+.dark {
+  --c-surface: 15 17 23;
+  --c-raised: 26 29 39;
+  --c-overlay: 36 40 60;
+  --c-text: 232 234 240;
+  --c-muted: 139 144 167;
+  --c-border: 46 51 80;
+  --c-primary: 108 99 255;
+  --c-primary-deep: 48 40 150;
+  --c-accent: 0 212 170;
+  --c-idle: 98 104 128;
+  --c-progress: 255 209 102;
+  --c-done: 6 214 160;
+  --c-danger: 255 107 107;
+}
+
+@layer base {
+  * {
+    @apply border-border;
   }
-}
 
-body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+  html {
+    @apply antialiased;
+  }
+
+  body {
+    @apply min-h-screen bg-surface leading-7 text-text;
+  }
+
+  ::selection {
+    background: rgb(var(--c-primary) / 0.3);
+  }
 }
 
 @layer utilities {

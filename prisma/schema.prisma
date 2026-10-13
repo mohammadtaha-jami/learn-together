@@ -1,0 +1,161 @@
+// Learn Together — database schema (skeleton)
+// PostgreSQL via DATABASE_URL
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum TopicScope {
+  PERSONAL
+  TEAM
+}
+
+enum ProgressStatus {
+  NOT_STARTED
+  IN_PROGRESS
+  DONE
+}
+
+enum TeamRole {
+  OWNER
+  MEMBER
+}
+
+model User {
+  id           String   @id @default(cuid())
+  email        String   @unique
+  passwordHash String
+  name         String
+  avatarUrl    String?
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  teamMembers      TeamMember[]
+  ownedTopics      Topic[]           @relation("TopicOwner")
+  progress         Progress[]
+  generatedPrompts GeneratedPrompt[]
+}
+
+model Team {
+  id         String   @id @default(cuid())
+  name       String
+  inviteCode String   @unique
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  members TeamMember[]
+  topics  Topic[]
+}
+
+model TeamMember {
+  id       String   @id @default(cuid())
+  userId   String
+  teamId   String
+  role     TeamRole @default(MEMBER)
+  joinedAt DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  team Team @relation(fields: [teamId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, teamId])
+  @@index([teamId])
+}
+
+model Topic {
+  id          String     @id @default(cuid())
+  scope       TopicScope
+  titleEn     String
+  titleFa     String?
+  description String?
+  /// Creator / owner (personal topics; team topic creator)
+  ownerId     String
+  /// Set when scope = TEAM
+  teamId      String?
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+
+  owner    User      @relation("TopicOwner", fields: [ownerId], references: [id], onDelete: Cascade)
+  team     Team?     @relation(fields: [teamId], references: [id], onDelete: Cascade)
+  chapters Chapter[]
+
+  @@index([ownerId])
+  @@index([teamId])
+  @@index([scope])
+}
+
+model Chapter {
+  id        String   @id @default(cuid())
+  topicId   String
+  /// e.g. "Ch.1" — matches seed JSON
+  number    String?
+  titleEn   String
+  titleFa   String?
+  /// Optional grouping label from seed (Part I, Part II, …)
+  partLabel String?
+  sortOrder Int      @default(0)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  topic            Topic             @relation(fields: [topicId], references: [id], onDelete: Cascade)
+  sections         Section[]         @relation("ChapterSections")
+  generatedPrompts GeneratedPrompt[]
+
+  @@index([topicId])
+}
+
+model Section {
+  id        String   @id @default(cuid())
+  chapterId String
+  parentId  String?
+  titleEn   String
+  titleFa   String?
+  sortOrder Int      @default(0)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  chapter  Chapter    @relation("ChapterSections", fields: [chapterId], references: [id], onDelete: Cascade)
+  parent   Section?   @relation("SectionTree", fields: [parentId], references: [id], onDelete: Cascade)
+  children Section[]  @relation("SectionTree")
+  progress Progress[]
+
+  @@index([chapterId])
+  @@index([parentId])
+}
+
+model Progress {
+  id          String         @id @default(cuid())
+  userId      String
+  sectionId   String
+  status      ProgressStatus @default(NOT_STARTED)
+  note        String?
+  completedAt DateTime?
+  updatedAt   DateTime       @updatedAt
+
+  user    User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  section Section @relation(fields: [sectionId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, sectionId])
+  @@index([userId])
+  @@index([sectionId])
+}
+
+model GeneratedPrompt {
+  id         String   @id @default(cuid())
+  userId     String
+  chapterId  String
+  /// Selected section IDs (subsections) for this prompt
+  sectionIds String[]
+  emphasis   String?
+  content    String   @db.Text
+  createdAt  DateTime @default(now())
+
+  user    User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  chapter Chapter @relation(fields: [chapterId], references: [id], onDelete: Cascade)
+
+  @@index([userId, createdAt(sort: Desc)])
+}
