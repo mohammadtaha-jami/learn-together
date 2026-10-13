@@ -13,7 +13,7 @@
 
 | | |
 |---|---|
-| **Developer** | [Your Name](https://github.com/YOUR_USERNAME) · [Team / Org](https://github.com/YOUR_ORG) |
+| **Developer** | [MohammadTaha ](https://github.com/mohammadtaha-jami)  |
 | **Demo** | _Coming soon_ — `https://your-demo.vercel.app` |
 | **Docs** | [Technical Specification](./full-document.md) |
 
