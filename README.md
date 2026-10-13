@@ -1,36 +1,37 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Learn Together
 
-## Getting Started
+پلتفرم یادگیری تیمی/شخصی — Next.js 14، Prisma، PostgreSQL، NextAuth (Credentials).
 
-First, run the development server:
+## راه‌اندازی
 
 ```bash
+cd learn-together
+cp .env.example .env   # اگر .env ندارید — Prisma بدون DATABASE_URL خطای P1012 می‌دهد
+
+# PostgreSQL محلی (اختیاری):
+docker compose up -d
+
+npm install
+npx prisma migrate deploy   # توسعه: npx prisma migrate dev
+npm run db:seed             # تیم + کتاب FSA (کد دعوت پیش‌فرض FSA26)
+npm run db:setup-team       # عضو کردن ۲ کاربر واقعی + موضوع کتاب (اگر از قبل seed نشده)
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## اولین درس تیمی (کتاب seed)
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+1. `npm run db:seed` — تیم «تیم یادگیری» و موضوع *Fundamentals of Software Architecture* ساخته می‌شود.
+2. ثبت‌نام کنید.
+3. در **یادگیری تیمی** با کد `SEED_TEAM_INVITE_CODE` (پیش‌فرض `FSA26`) به تیم seed بپیوندید (اگر تیم جدید ساختید، موضوع seed را نمی‌بینید — باید join کنید).
+4. موضوع کتاب را باز کنید و پیشرفت را تیک بزنید.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Vercel
 
-## Learn More
+- Env: `DATABASE_URL`, `NEXTAUTH_URL`, `NEXTAUTH_SECRET`, `SEED_TEAM_INVITE_CODE`
+- Build: `prisma generate && next build` (در `package.json`)
+- پس از deploy: `npx prisma migrate deploy` و یک‌بار `npm run db:seed` روی DB production
 
-To learn more about Next.js, take a look at the following resources:
+## MVP
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- یک تیم فعال per کاربر (ساخت یا پیوستن).
+- موضوعات PERSONAL/TEAM، فصل/زیرفصل تو در تو، progress سه‌حالته، پرامپت‌ساز، تاریخچه ۷ روز.
