@@ -11,8 +11,18 @@ export async function GET(request: Request) {
 
   const { searchParams } = new URL(request.url);
   const scope = searchParams.get("scope") as TopicScope | null;
+  const teamId = searchParams.get("teamId");
 
-  return NextResponse.json(await getTopicSummaries(auth.user.id, scope));
+  if (scope === "TEAM" && teamId) {
+    const member = await prisma.teamMember.findUnique({
+      where: { userId_teamId: { userId: auth.user.id, teamId } },
+    });
+    if (!member) {
+      return NextResponse.json({ error: "عضو این تیم نیستید" }, { status: 403 });
+    }
+  }
+
+  return NextResponse.json(await getTopicSummaries(auth.user.id, scope, teamId));
 }
 export async function POST(request: Request) {
   const auth = await requireUser();
