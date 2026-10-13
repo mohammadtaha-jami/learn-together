@@ -11,11 +11,23 @@ export type MemberProgress = {
 
 export function Avatar({
   name,
+  src,
   className,
 }: {
   name: string;
+  src?: string | null;
   className?: string;
 }) {
+  if (src) {
+    return (
+      // eslint-disable-next-line @next/next/no-img-element
+      <img
+        src={src}
+        alt=""
+        className={cn("h-10 w-10 shrink-0 rounded-full object-cover", className)}
+      />
+    );
+  }
   return (
     <span
       className={cn(

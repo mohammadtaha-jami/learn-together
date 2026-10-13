@@ -13,9 +13,12 @@ export const authConfig = {
       if (path.startsWith("/dashboard")) return isLoggedIn;
       return true;
     },
-    jwt({ token, user }) {
+    jwt({ token, user, trigger, session }) {
       if (user) {
         token.id = user.id;
+      }
+      if (trigger === "update" && typeof session?.name === "string") {
+        token.name = session.name;
       }
       return token;
     },

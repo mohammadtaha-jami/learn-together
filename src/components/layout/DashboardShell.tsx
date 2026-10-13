@@ -2,16 +2,16 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { signOut, useSession } from "next-auth/react";
+import { useSession } from "next-auth/react";
 import {
   ChartColumn,
   LayoutDashboard,
-  LogOut,
   Sparkles,
   User,
   Users,
 } from "lucide-react";
 import { Logo } from "@/components/layout/Logo";
+import { UserMenu } from "@/components/layout/UserMenu";
 import { ThemeToggle } from "@/components/theme/ThemeToggle";
 import { Avatar } from "@/components/ui/MemberBars";
 import { cn } from "@/lib/utils/cn";
@@ -64,28 +64,11 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
         </nav>
 
         <div className="mt-auto space-y-3">
-          <div className="flex items-center justify-between rounded-2xl bg-surface-overlay/60 p-2.5">
-            <div className="flex min-w-0 items-center gap-2.5">
-              <Avatar name={name} className="h-10 w-10" />
-              <div className="min-w-0">
-                <p className="truncate text-sm font-semibold">{name}</p>
-                <p className="truncate text-xs text-text-muted" dir="ltr">
-                  {session?.user?.email}
-                </p>
-              </div>
-            </div>
-          </div>
-          <div className="flex items-center gap-2">
-            <button
-              type="button"
-              onClick={() => signOut({ callbackUrl: "/" })}
-              className="flex h-11 flex-1 items-center justify-center gap-2 rounded-pill text-sm text-text-muted ring-1 ring-border transition hover:bg-surface-overlay hover:text-text"
-            >
-              <LogOut className="h-4 w-4" />
-              خروج
-            </button>
+          <div className="flex items-center justify-between px-2">
+            <span className="text-xs text-text-muted">پوسته</span>
             <ThemeToggle />
           </div>
+          <UserMenu />
         </div>
       </aside>
 
@@ -95,14 +78,13 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
           <Logo href="/dashboard" />
           <div className="flex items-center gap-2">
             <ThemeToggle />
-            <button
-              type="button"
-              onClick={() => signOut({ callbackUrl: "/" })}
-              aria-label="خروج از حساب"
-              className="grid h-11 w-11 place-items-center rounded-full bg-surface-raised text-text-muted ring-1 ring-border"
+            <Link
+              href="/dashboard/profile"
+              aria-label="پروفایل من"
+              className="rounded-full ring-2 ring-border/60 transition hover:ring-brand-primary/50"
             >
-              <LogOut className="h-5 w-5" />
-            </button>
+              <Avatar name={name} className="h-11 w-11" />
+            </Link>
           </div>
         </div>
 
