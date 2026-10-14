@@ -18,33 +18,13 @@ export function TopicCard({ topic }: { topic: TopicSummary }) {
 
   return (
     <>
-      <Card
-        className={cn(
-          "group relative h-full transition hover:-translate-y-0.5 hover:shadow-float",
-          topic.canDelete && "pt-1",
-        )}
-      >
-        {topic.canDelete && (
-          <button
-            type="button"
-            aria-label="حذف موضوع"
-            onClick={() => setDeleteOpen(true)}
-            className={cn(
-              buttonVariants({
-                variant: "ghost",
-                size: "icon",
-                className:
-                  "absolute start-3 top-3 z-10 h-9 w-9 text-text-muted hover:bg-state-danger/10 hover:text-state-danger",
-              }),
-            )}
-          >
-            <Trash2 className="h-4 w-4" />
-          </button>
-        )}
-
+      <Card className="group h-full transition hover:-translate-y-0.5 hover:shadow-float">
         <Link href={`/dashboard/topics/${topic.id}`} className="block">
-          <div className="flex items-start justify-between gap-3">
-            <Badge variant={isTeam ? "team" : "personal"} className="max-w-[75%]">
+          <div className="flex items-start justify-between gap-2">
+            <Badge
+              variant={isTeam ? "team" : "personal"}
+              className="min-w-0 max-w-[calc(100%-5.5rem)]"
+            >
               {isTeam ? (
                 <Users className="h-3.5 w-3.5 shrink-0" />
               ) : (
@@ -54,7 +34,36 @@ export function TopicCard({ topic }: { topic: TopicSummary }) {
                 {isTeam ? `تیم ${topic.teamName ?? ""}`.trim() : "شخصی"}
               </span>
             </Badge>
-            <ChevronLeft className="h-5 w-5 shrink-0 text-text-muted transition group-hover:-translate-x-1" />
+
+            <div className="flex shrink-0 items-center gap-0.5">
+              {topic.canDelete && (
+                <button
+                  type="button"
+                  aria-label="حذف موضوع"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    setDeleteOpen(true);
+                  }}
+                  className={cn(
+                    buttonVariants({
+                      variant: "ghost",
+                      size: "icon",
+                      className:
+                        "h-9 w-9 text-text-muted opacity-80 transition hover:bg-state-danger/10 hover:text-state-danger group-hover:opacity-100",
+                    }),
+                  )}
+                >
+                  <Trash2 className="h-4 w-4" />
+                </button>
+              )}
+              <span
+                className="grid h-9 w-9 place-items-center text-text-muted transition group-hover:-translate-x-0.5"
+                aria-hidden
+              >
+                <ChevronLeft className="h-5 w-5" />
+              </span>
+            </div>
           </div>
 
           <h3 className="mt-4 text-lg font-semibold leading-snug" dir="auto">
