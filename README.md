@@ -231,7 +231,7 @@ Distributed under the **MIT License**. See [`LICENSE`](./LICENSE) for the full t
 If `LICENSE` is not yet in the repo, add:
 
 ```text
-MIT License — Copyright (c) 2026 [Your Name]
+MIT License — Copyright (c) 2026 [MohammadTaha]
 ```
 
 ---
