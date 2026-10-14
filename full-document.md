@@ -5,6 +5,15 @@
 | Learn Together TSD | 1.0 | Production-oriented MVP |
 | Last updated | 2026-10-13 | Aligned with `main` codebase |
 
+**Hosted links**
+
+| Role | URL |
+|------|-----|
+| Source code | [github.com/mohammadtaha-jami/learn-together](https://github.com/mohammadtaha-jami/learn-together) |
+| Deploy / logs / env | [vercel.com/mohammadtaha-jami/learn-together](https://vercel.com/taha-2551/learn-together) |
+| Production app | [https://learn-together-taha-2551.vercel.app](https://learn-together-taha-2551.vercel.app) — set as `NEXTAUTH_URL` · [Deployments](https://vercel.com/taha-2551/learn-together/deployments) |
+| Local dev | `http://localhost:3000` |
+
 ---
 
 ## 1. System Overview
@@ -379,7 +388,7 @@ erDiagram
 
 | Aspect | Rule |
 |--------|------|
-| Base URL | Same origin, e.g. `https://app.example.com/api` |
+| Base URL | Same origin as the app (`NEXTAUTH_URL` + `/api`), e.g. `https://<your-production-domain>.vercel.app/api` |
 | Auth | Session cookie from NextAuth (except `POST /api/auth/register`) |
 | Content-Type | `application/json` for bodies |
 | Errors | `{ "error": "message" }` (Persian or English depending on route) |
@@ -677,7 +686,7 @@ Deep links: `/dashboard/topics/[id]?chapter=&section=` scrolls to section.
 | Variable | Required | Description | Example |
 |----------|----------|-------------|---------|
 | `DATABASE_URL` | **Yes** | PostgreSQL connection string | `postgresql://postgres:postgres@localhost:5437/learn_together?schema=public` |
-| `NEXTAUTH_URL` | **Yes** (prod) | Canonical app URL | `https://your-app.vercel.app` |
+| `NEXTAUTH_URL` | **Yes** (prod) | Canonical app URL | `https://learn-together-taha-2551.vercel.app` |
 | `NEXTAUTH_SECRET` | **Yes** (prod) | JWT/session signing secret | `openssl rand -base64 32` |
 | `SEED_TEAM_INVITE_CODE` | Seed only | Invite code for seeded team | `FSA26` |
 | `SEED_SECRET` | Optional | Guard seed HTTP routes in production | — |
@@ -759,10 +768,19 @@ CMD ["node", "server.js"]
 
 ### 6.3 Vercel Deployment (documented in README)
 
-1. Connect Git repository; set env vars (`DATABASE_URL`, `NEXTAUTH_*`, `SEED_TEAM_INVITE_CODE`).
-2. Build command: `prisma generate && next build` (default from `package.json`).
-3. Post-deploy: `npx prisma migrate deploy` against production DB.
-4. One-time: `npm run db:seed` against production (or run seed from CI with protected secret).
+| Item | Link |
+|------|------|
+| Vercel project | [vercel.com/mohammadtaha-jami/learn-together](https://vercel.com/taha-2551/learn-together) |
+| Production deployments | [Deployments](https://vercel.com/taha-2551/learn-together/deployments) |
+| Git repository | [github.com/mohammadtaha-jami/learn-together](https://github.com/mohammadtaha-jami/learn-together) |
+| Clone template (Vercel) | [Import repository](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fmohammadtaha-jami%2Flearn-together&project-name=learn-together) |
+
+1. Connect the GitHub repository; confirm **Root Directory** matches where `package.json` lives.
+2. Set env vars: `DATABASE_URL` (Neon pooled + `pgbouncer=true` for serverless), `NEXTAUTH_URL` (exact Production **Visit** URL), `NEXTAUTH_SECRET`, `SEED_TEAM_INVITE_CODE`.
+3. Build command: `prisma generate && next build` (default from `package.json`).
+4. Post-deploy: `npx prisma migrate deploy` against the production database (same Neon DB as `DATABASE_URL`).
+5. One-time: `npm run db:seed` against production (or run seed from CI with protected secret).
+6. Live URL: Vercel → **Deployments** → filter **Production** → **Visit**.
 
 ### 6.4 CI/CD Strategy (recommended)
 

@@ -3,7 +3,7 @@
 
 # Learn Together
 
-[![Build](https://img.shields.io/github/actions/workflow/status/YOUR_ORG/learn-together/ci.yml?branch=main&label=build)](https://github.com/YOUR_ORG/learn-together/actions)
+[![Build](https://img.shields.io/github/actions/workflow/status/mohammadtaha-jami/learn-together/ci.yml?branch=main&label=build)](https://github.com/mohammadtaha-jami/learn-together/actions)
 [![Version](https://img.shields.io/badge/version-0.1.0-blue)](./package.json)
 [![License](https://img.shields.io/badge/license-MIT-green)](./LICENSE)
 [![Next.js](https://img.shields.io/badge/Next.js-14.2-black?logo=next.js)](https://nextjs.org/)
@@ -13,8 +13,10 @@
 
 | | |
 |---|---|
-| **Developer** | [MohammadTaha ](https://github.com/mohammadtaha-jami)  |
-| **Demo** | _Coming soon_ — `https://your-demo.vercel.app` |
+| **Developer** | [MohammadTaha](https://github.com/mohammadtaha-jami) |
+| **Repository** | [github.com/mohammadtaha-jami/learn-together](https://github.com/mohammadtaha-jami/learn-together) |
+| **Production** | [https://learn-together-taha-2551.vercel.app](https://learn-together-taha-2551.vercel.app) (`NEXTAUTH_URL`) · [Deployments](https://vercel.com/taha-2551/learn-together/deployments) |
+| **Deploy / ops** | [Vercel project dashboard](https://vercel.com/taha-2551/learn-together) |
 | **Docs** | [Technical Specification](./full-document.md) |
 
 ---
@@ -177,9 +179,14 @@ See [full-document.md](./full-document.md) for the complete API reference.
 
 ### Deploy (Vercel + managed Postgres)
 
-1. Set env: `DATABASE_URL`, `NEXTAUTH_URL`, `NEXTAUTH_SECRET`, `SEED_TEAM_INVITE_CODE`.
-2. Build: `prisma generate && next build` (default in `package.json`).
-3. After deploy: `npx prisma migrate deploy` and run `npm run db:seed` once on production DB if you want demo data.
+**Project:** [vercel.com/mohammadtaha-jami/learn-together](https://vercel.com/taha-2551/learn-together)  
+**Import (one-click):** [Deploy to Vercel](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fmohammadtaha-jami%2Flearn-together&project-name=learn-together&root-directory=.)
+
+1. Connect the [GitHub repo](https://github.com/mohammadtaha-jami/learn-together); set **Root Directory** to repo root (or `learn-together` if the app lives in a subfolder).
+2. Set env: `DATABASE_URL` (Neon **pooled** URL + `pgbouncer=true` — see [.env.example](./.env.example)), `NEXTAUTH_URL` (HTTPS origin of the Production **Visit** URL), `NEXTAUTH_SECRET`, `SEED_TEAM_INVITE_CODE`.
+3. Build: `prisma generate && next build` (default in `package.json`).
+4. After deploy: `npx prisma migrate deploy` against the same `DATABASE_URL` database; run `npm run db:seed` once if you want demo data.
+5. Open [Deployments](https://vercel.com/taha-2551/learn-together/deployments) → Production → **Visit** for the live app URL.
 
 ---
 
@@ -190,7 +197,7 @@ See [full-document.md](./full-document.md) for the complete API reference.
 | Home | _Add screenshot: `./docs/screenshots/home.png`_ |
 | Dashboard | _Add screenshot: `./docs/screenshots/dashboard.png`_ |
 | Topic detail | _Add screenshot: `./docs/screenshots/topic.png`_ |
-| Live demo | _https://your-demo.vercel.app_ |
+| Live (production) | [learn-together-taha-2551.vercel.app](https://learn-together-taha-2551.vercel.app) |
 
 ---
 
