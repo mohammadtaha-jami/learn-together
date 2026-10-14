@@ -1,4 +1,5 @@
-import type { ProgressStatus, TopicScope } from "@prisma/client";
+import type { ProgressStatus, TeamRole, TopicScope } from "@prisma/client";
+import { canDeleteTopic } from "@/lib/learning/topic-access";
 import { prisma } from "@/lib/prisma";
 import { getLeafSections } from "@/lib/learning/section-tree";
 
@@ -15,6 +16,7 @@ export type TopicSummary = {
   done: number;
   inProgress: number;
   percent: number;
+  canDelete: boolean;
 };
 
 export type TodayItem = {
@@ -122,6 +124,13 @@ export async function getTopicSummaries(
   teamId?: string | null,
 ): Promise<TopicSummary[]> {
   const topics = await loadTopics(userId, scope, teamId);
+  const memberships = await prisma.teamMember.findMany({
+    where: { userId },
+    select: { teamId: true, role: true },
+  });
+  const roleByTeam = new Map<string, TeamRole>(
+    memberships.map((m) => [m.teamId, m.role]),
+  );
   const leafIds = topics.flatMap((t) => leavesOf(t).map((l) => l.id));
   const progress = await prisma.progress.findMany({
     where: { userId, sectionId: { in: leafIds } },
@@ -129,12 +138,14 @@ export async function getTopicSummaries(
   });
   const statusById = new Map(progress.map((p) => [p.sectionId, p.status]));
 
-  return topics.map((t) => summarize(t, statusById));
+  return topics.map((t) => summarize(t, statusById, userId, roleByTeam));
 }
 
 function summarize(
   t: LoadedTopic,
   statusById: Map<string, ProgressStatus>,
+  userId: string,
+  roleByTeam: Map<string, TeamRole>,
 ): TopicSummary {
   const leaves = leavesOf(t);
   let done = 0;
@@ -157,6 +168,11 @@ function summarize(
     done,
     inProgress,
     percent: leaves.length ? Math.round((done / leaves.length) * 100) : 0,
+    canDelete: canDeleteTopic(
+      t,
+      userId,
+      t.teamId ? roleByTeam.get(t.teamId) : null,
+    ),
   };
 }
 
@@ -169,6 +185,14 @@ export async function buildOverview(
   const leafIds = topics.flatMap((t) => leavesOf(t).map((l) => l.id));
 
   const since = new Date(Date.now() - 60 * 86_400_000);
+  const memberships = await prisma.teamMember.findMany({
+    where: { userId },
+    select: { teamId: true, role: true },
+  });
+  const roleByTeam = new Map<string, TeamRole>(
+    memberships.map((m) => [m.teamId, m.role]),
+  );
+
   const [progress, doneRecent, membership] = await Promise.all([
     prisma.progress.findMany({
       where: { userId, sectionId: { in: leafIds } },
@@ -199,7 +223,7 @@ export async function buildOverview(
   ]);
 
   const statusById = new Map(progress.map((p) => [p.sectionId, p.status]));
-  const summaries = topics.map((t) => summarize(t, statusById));
+  const summaries = topics.map((t) => summarize(t, statusById, userId, roleByTeam));
 
   const total = summaries.reduce((a, s) => a + s.total, 0);
   const done = summaries.reduce((a, s) => a + s.done, 0);

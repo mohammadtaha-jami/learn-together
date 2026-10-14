@@ -18,10 +18,12 @@ import {
   Play,
   Plus,
   Search,
+  Trash2,
   Users,
   X,
 } from "lucide-react";
 import type { ProgressStatus, TopicScope } from "@prisma/client";
+import { DeleteTopicDialog } from "@/components/learning/DeleteTopicDialog";
 import { Badge } from "@/components/ui/Badge";
 import { Button, buttonVariants } from "@/components/ui/Button";
 import { Card, CardTitle } from "@/components/ui/Card";
@@ -65,6 +67,8 @@ type Topic = {
   titleFa: string | null;
   description: string | null;
   scope: TopicScope;
+  canDelete?: boolean;
+  team?: { name: string } | null;
   chapters: Chapter[];
 };
 
@@ -313,6 +317,7 @@ export function TopicDetailClient({ topicId }: { topicId: string }) {
   const params = useSearchParams();
   const { data: session } = useSession();
 
+  const [deleteOpen, setDeleteOpen] = useState(false);
   const [filter, setFilter] = useState<Filter>("ALL");
   const [query, setQuery] = useState("");
   const [open, setOpen] = useState<Set<string>>(new Set());
@@ -659,6 +664,12 @@ export function TopicDetailClient({ topicId }: { topicId: string }) {
             <Pencil className="h-4 w-4" />
             {editing ? "پایان ویرایش" : "ویرایش سرفصل‌ها"}
           </Button>
+          {topic.canDelete && (
+            <Button variant="danger" onClick={() => setDeleteOpen(true)}>
+              <Trash2 className="h-4 w-4" />
+              حذف موضوع
+            </Button>
+          )}
         </div>
 
         <div className="flex flex-wrap items-center gap-2" role="tablist" aria-label="فیلتر وضعیت">
@@ -805,6 +816,23 @@ export function TopicDetailClient({ topicId }: { topicId: string }) {
       <span className="sr-only" aria-live="polite">
         {inFlight > 0 ? "در حال ذخیره" : ""}
       </span>
+
+      <DeleteTopicDialog
+        open={deleteOpen}
+        onClose={() => setDeleteOpen(false)}
+        redirectTo={backHref}
+        topic={
+          deleteOpen
+            ? {
+                id: topic.id,
+                titleEn: topic.titleEn,
+                titleFa: topic.titleFa,
+                scope: topic.scope,
+                teamName: topic.team?.name,
+              }
+            : null
+        }
+      />
     </div>
   );
 }
