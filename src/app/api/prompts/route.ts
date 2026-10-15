@@ -30,6 +30,7 @@ export async function POST(request: Request) {
   const sectionIds = body.sectionIds as string[];
   const emphasis = body.emphasis?.toString() || null;
   const content = body.content?.toString();
+  const masterPromptId = body.masterPromptId?.toString() || null;
 
   if (!chapterId || !content || !Array.isArray(sectionIds) || sectionIds.length === 0) {
     return NextResponse.json({ error: "داده نامعتبر" }, { status: 400 });
@@ -45,10 +46,20 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: "Forbidden" }, { status: 403 });
   }
 
+  if (masterPromptId) {
+    const owned = await prisma.masterPrompt.findFirst({
+      where: { id: masterPromptId, userId: auth.user.id },
+    });
+    if (!owned) {
+      return NextResponse.json({ error: "پرامپت اصلی پیدا نشد" }, { status: 400 });
+    }
+  }
+
   const prompt = await prisma.generatedPrompt.create({
     data: {
       userId: auth.user.id,
       chapterId,
+      masterPromptId,
       sectionIds,
       emphasis,
       content,
