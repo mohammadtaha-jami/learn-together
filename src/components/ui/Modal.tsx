@@ -23,19 +23,31 @@ export function Modal({
   className?: string;
 }) {
   const panelRef = useRef<HTMLDivElement>(null);
+  const onCloseRef = useRef(onClose);
+  onCloseRef.current = onClose;
 
   useEffect(() => {
     if (!open) return;
-    const onKey = (e: KeyboardEvent) => e.key === "Escape" && onClose();
+
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") onCloseRef.current();
+    };
     document.addEventListener("keydown", onKey);
+
     const prevOverflow = document.body.style.overflow;
     document.body.style.overflow = "hidden";
-    panelRef.current?.focus();
+
+    // Focus trap entry only when opening — not on every parent re-render (avoids stealing input focus).
+    const id = requestAnimationFrame(() => {
+      panelRef.current?.focus();
+    });
+
     return () => {
+      cancelAnimationFrame(id);
       document.removeEventListener("keydown", onKey);
       document.body.style.overflow = prevOverflow;
     };
-  }, [open, onClose]);
+  }, [open]);
 
   if (!open || typeof document === "undefined") return null;
 
@@ -43,7 +55,7 @@ export function Modal({
     <div className="fixed inset-0 z-50 flex items-end justify-center p-3 sm:items-center sm:p-6">
       <div
         aria-hidden
-        onClick={onClose}
+        onClick={() => onCloseRef.current()}
         className="absolute inset-0 bg-black/50 backdrop-blur-sm"
       />
       <div
@@ -53,7 +65,7 @@ export function Modal({
         aria-modal="true"
         aria-label={title}
         className={cn(
-          "relative max-h-[90vh] w-full max-w-lg overflow-y-auto rounded-card bg-surface-raised p-5 shadow-float ring-1 ring-border/60 outline-none md:p-6",
+          "scrollbar-app relative max-h-[90vh] w-full max-w-lg overflow-y-auto rounded-card bg-surface-raised p-5 shadow-float ring-1 ring-border/60 outline-none md:p-6",
           className,
         )}
       >
@@ -71,7 +83,7 @@ export function Modal({
           </div>
           <button
             type="button"
-            onClick={onClose}
+            onClick={() => onCloseRef.current()}
             aria-label="بستن"
             className="grid h-10 w-10 shrink-0 place-items-center rounded-full text-text-muted transition hover:bg-surface-overlay hover:text-text"
           >

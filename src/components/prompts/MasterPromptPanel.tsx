@@ -41,7 +41,7 @@ type FormState = {
 
 const emptyForm = (): FormState => ({
   name: "",
-  body: MASTER_PROMPT,
+  body: "",
   topicId: "",
 });
 
@@ -213,7 +213,7 @@ export function MasterPromptPanel({
               className="py-6"
             />
           ) : (
-            <ul className="space-y-2">
+            <ul className="scrollbar-app max-h-56 space-y-2 overflow-y-auto pe-1">
               {custom.map((m) => (
                 <li
                   key={m.id}
@@ -272,7 +272,7 @@ export function MasterPromptPanel({
       </button>
       {showPreview && (
         <pre
-          className="max-h-48 overflow-auto whitespace-pre-wrap rounded-2xl bg-surface-overlay/60 p-4 text-xs leading-6 text-text-muted"
+          className="scrollbar-app max-h-48 overflow-auto whitespace-pre-wrap rounded-2xl bg-surface-overlay/60 p-4 text-xs leading-6 text-text-muted"
           dir="auto"
         >
           {options.find((o) => o.id === selectedMasterId)?.body ?? MASTER_PROMPT}
@@ -313,8 +313,12 @@ export function MasterPromptPanel({
               value={form.body}
               onChange={(e) => setForm((f) => ({ ...f, body: e.target.value }))}
               rows={12}
-              className={cn(inputClass, "h-auto py-3 font-mono text-xs leading-6")}
+              className={cn(
+                inputClass,
+                "scrollbar-app h-auto max-h-64 min-h-[12rem] resize-y py-3 font-mono text-xs leading-6",
+              )}
               dir="auto"
+              placeholder="قالب Master خود را اینجا بنویسید. برای مباحث جلسه از {{SESSION}} یا [لیست زیرعنوان‌های انتخاب‌شده] استفاده کنید."
             />
           </label>
           <p className="text-xs leading-6 text-text-muted">

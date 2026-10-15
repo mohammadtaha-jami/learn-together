@@ -275,7 +275,7 @@ export function PromptBuilderClient() {
                   </Button>
                 </span>
               </div>
-              <div className="max-h-80 overflow-y-auto rounded-2xl bg-surface-overlay/40 p-1.5">
+              <div className="scrollbar-app max-h-80 overflow-y-auto rounded-2xl bg-surface-overlay/40 p-1.5 pe-0.5">
                 {allIds.length ? (
                   renderNodes(tree)
                 ) : (
@@ -337,7 +337,7 @@ export function PromptBuilderClient() {
                   : "Master انتخاب‌شده + متغیرهای پر شده با مباحث این جلسه."}
               </p>
               <pre
-                className="min-h-[220px] flex-1 whitespace-pre-wrap rounded-2xl bg-surface-raised p-4 text-sm leading-7 ring-1 ring-border/50"
+                className="scrollbar-app min-h-[220px] max-h-[min(50vh,28rem)] flex-1 overflow-y-auto whitespace-pre-wrap rounded-2xl bg-surface-raised p-4 text-sm leading-7 ring-1 ring-border/50"
                 dir="auto"
               >
                 {displayOutput}
@@ -380,7 +380,7 @@ export function PromptBuilderClient() {
                   <ClientDateTime iso={h.createdAt} />
                 </div>
                 <pre
-                  className="mt-2 max-h-24 overflow-hidden whitespace-pre-wrap text-xs leading-6 text-text-muted"
+                  className="scrollbar-app mt-2 max-h-28 overflow-y-auto whitespace-pre-wrap text-xs leading-6 text-text-muted"
                   dir="auto"
                 >
                   {h.content}

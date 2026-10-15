@@ -41,7 +41,7 @@
   }
 
   html {
-    @apply antialiased;
+    @apply scrollbar-app antialiased;
   }
 
   body {
@@ -56,5 +56,46 @@
 @layer utilities {
   .text-balance {
     text-wrap: balance;
+  }
+
+  /* Branded scrollbars (prompt builder, modals, scroll panels) */
+  .scrollbar-app {
+    scrollbar-width: thin;
+    scrollbar-color: rgb(var(--c-primary) / 0.5) rgb(var(--c-overlay) / 0.65);
+  }
+
+  .scrollbar-app::-webkit-scrollbar {
+    width: 9px;
+    height: 9px;
+  }
+
+  .scrollbar-app::-webkit-scrollbar-track {
+    margin: 6px;
+    border-radius: 999px;
+    background: rgb(var(--c-overlay) / 0.55);
+  }
+
+  .scrollbar-app::-webkit-scrollbar-thumb {
+    border: 2px solid transparent;
+    border-radius: 999px;
+    background: linear-gradient(
+      180deg,
+      rgb(var(--c-primary) / 0.55),
+      rgb(var(--c-accent) / 0.45)
+    );
+    background-clip: padding-box;
+  }
+
+  .scrollbar-app::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(
+      180deg,
+      rgb(var(--c-primary) / 0.75),
+      rgb(var(--c-accent) / 0.6)
+    );
+    background-clip: padding-box;
+  }
+
+  .scrollbar-app::-webkit-scrollbar-corner {
+    background: transparent;
   }
 }

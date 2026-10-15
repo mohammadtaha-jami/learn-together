@@ -88,7 +88,7 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
           </div>
         </div>
 
-        <main>{children}</main>
+        <main className="scrollbar-app">{children}</main>
       </div>
 
       {/* Bottom nav (mobile) */}
