@@ -42,6 +42,12 @@ export async function GET(request: Request) {
   });
 
   const membersSummary: { userId: string; name: string; percent: number }[] = [];
+  const teammateProgress: {
+    userId: string;
+    name: string;
+    sectionId: string;
+    status: "IN_PROGRESS" | "DONE";
+  }[] = [];
 
   if (topic.scope === "TEAM" && topic.teamId) {
     const [members, grouped] = await Promise.all([
@@ -61,14 +67,40 @@ export async function GET(request: Request) {
         userId: m.user.id,
         name: m.user.name,
         percent: leafIds.length
-          ? Math.round(((doneBy.get(m.userId) ?? 0) / leafIds.length) * 100)
+          ? Math.round(((doneBy.get(m.user.id) ?? 0) / leafIds.length) * 100)
           : 0,
       });
+    }
+
+    const teammateIds = members
+      .map((m) => m.user.id)
+      .filter((id) => id !== auth.user.id);
+    const nameById = new Map(members.map((m) => [m.user.id, m.user.name]));
+
+    if (teammateIds.length > 0 && leafIds.length > 0) {
+      const rows = await prisma.progress.findMany({
+        where: {
+          userId: { in: teammateIds },
+          sectionId: { in: leafIds },
+          status: { in: ["IN_PROGRESS", "DONE"] },
+        },
+        select: { userId: true, sectionId: true, status: true },
+      });
+      for (const row of rows) {
+        if (row.status !== "IN_PROGRESS" && row.status !== "DONE") continue;
+        teammateProgress.push({
+          userId: row.userId,
+          name: nameById.get(row.userId) ?? "?",
+          sectionId: row.sectionId,
+          status: row.status,
+        });
+      }
     }
   }
   return NextResponse.json({
     progress: myProgress,
     membersSummary,
+    teammateProgress,
     leafSectionIds: leafIds,
   });
 }

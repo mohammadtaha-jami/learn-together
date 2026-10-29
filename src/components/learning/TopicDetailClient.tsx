@@ -24,6 +24,10 @@ import {
 } from "lucide-react";
 import type { ProgressStatus, TopicScope } from "@prisma/client";
 import { DeleteTopicDialog } from "@/components/learning/DeleteTopicDialog";
+import {
+  TeammateStatusLabels,
+  type TeammateStatusEntry,
+} from "@/components/learning/TeammateStatusLabels";
 import { Badge } from "@/components/ui/Badge";
 import { Button, buttonVariants } from "@/components/ui/Button";
 import { Card, CardTitle } from "@/components/ui/Card";
@@ -75,7 +79,15 @@ type Topic = {
 type ProgressData = {
   progress: { sectionId: string; status: ProgressStatus }[];
   membersSummary: { userId: string; name: string; percent: number }[];
+  teammateProgress?: {
+    userId: string;
+    name: string;
+    sectionId: string;
+    status: "IN_PROGRESS" | "DONE";
+  }[];
 };
+
+type TeammatesBySection = Map<string, TeammateStatusEntry[]>;
 
 type Filter = "ALL" | ProgressStatus;
 type StatusMap = Map<string, ProgressStatus>;
@@ -129,18 +141,21 @@ function SectionRow({
   statuses,
   onCycle,
   highlightId,
+  teammatesBySection,
 }: {
   node: SectionNode;
   depth: number;
   statuses: StatusMap;
   onCycle: (id: string, next: ProgressStatus) => void;
   highlightId: string | null;
+  teammatesBySection: TeammatesBySection;
 }) {
   const isLeaf = !node.children?.length;
   const indent = { paddingInlineStart: depth * 20 };
 
   if (isLeaf) {
     const status = statuses.get(node.id) ?? "NOT_STARTED";
+    const teammates = teammatesBySection.get(node.id) ?? [];
     return (
       <div style={indent}>
         <button
@@ -173,6 +188,13 @@ function SectionRow({
           </span>
           <StatusChip status={status} />
         </button>
+        {teammates.length > 0 && (
+          <TeammateStatusLabels
+            entries={teammates}
+            mode="section"
+            className="px-3 pb-2 ps-12"
+          />
+        )}
       </div>
     );
   }
@@ -202,6 +224,7 @@ function SectionRow({
           statuses={statuses}
           onCycle={onCycle}
           highlightId={highlightId}
+          teammatesBySection={teammatesBySection}
         />
       ))}
     </div>
@@ -423,6 +446,28 @@ export function TopicDetailClient({ topicId }: { topicId: string }) {
     return m;
   }, [progressData]);
 
+  const teammatesBySection: TeammatesBySection = useMemo(() => {
+    const map: TeammatesBySection = new Map();
+    for (const row of progressData?.teammateProgress ?? []) {
+      const list = map.get(row.sectionId) ?? [];
+      list.push({
+        userId: row.userId,
+        name: row.name,
+        status: row.status,
+      });
+      map.set(row.sectionId, list);
+    }
+    map.forEach((list) => {
+      list.sort((a, b) => {
+        if (a.status !== b.status) {
+          return a.status === "IN_PROGRESS" ? -1 : 1;
+        }
+        return a.name.localeCompare(b.name, "fa");
+      });
+    });
+    return map;
+  }, [progressData]);
+
   // Per-chapter derived data
   const chapters = useMemo(() => {
     return (topic?.chapters ?? []).map((ch) => {
@@ -433,14 +478,26 @@ export function TopicDetailClient({ topicId }: { topicId: string }) {
         sortOrder: s.sortOrder,
         parentId: s.parentId,
       }));
+      const leaves = getLeafSections(nodes);
+      const hereMap = new Map<string, TeammateStatusEntry>();
+      for (const leaf of leaves) {
+        for (const e of teammatesBySection.get(leaf.id) ?? []) {
+          if (e.status === "IN_PROGRESS" && !hereMap.has(e.userId)) {
+            hereMap.set(e.userId, e);
+          }
+        }
+      }
       return {
         ch,
         nodes,
         tree: buildSectionTree(nodes),
-        leaves: getLeafSections(nodes),
+        leaves,
+        teammatesHere: Array.from(hereMap.values()).sort((a, b) =>
+          a.name.localeCompare(b.name, "fa"),
+        ),
       };
     });
-  }, [topic]);
+  }, [topic, teammatesBySection]);
 
   const totals = useMemo(() => {
     let total = 0;
@@ -624,6 +681,9 @@ export function TopicDetailClient({ topicId }: { topicId: string }) {
           <CardTitle icon={<Users className="h-5 w-5 text-brand-primary" />}>
             پیشرفت اعضای تیم
           </CardTitle>
+          <p className="mb-4 text-xs text-text-muted">
+            وضعیت جزئی هر مبحث روی سرفصل‌ها مشخص است.
+          </p>
           <MemberBars
             members={members.map((m) => ({
               id: m.userId,
@@ -728,7 +788,7 @@ export function TopicDetailClient({ topicId }: { topicId: string }) {
               {g.part && (
                 <h2 className="px-1 text-sm font-semibold text-text-muted">{g.part}</h2>
               )}
-              {g.items.map(({ ch, nodes, leaves, shown }) => {
+              {g.items.map(({ ch, nodes, leaves, shown, teammatesHere }) => {
                 const done = leaves.filter((l) => statuses.get(l.id) === "DONE").length;
                 const prog = leaves.filter((l) => statuses.get(l.id) === "IN_PROGRESS").length;
                 const pct = leaves.length ? (done / leaves.length) * 100 : 0;
@@ -770,6 +830,13 @@ export function TopicDetailClient({ topicId }: { topicId: string }) {
                             {prog > 0 && ` · ${fa(prog)} در حال یادگیری`}
                           </span>
                         </span>
+                        {teammatesHere.length > 0 && (
+                          <TeammateStatusLabels
+                            entries={teammatesHere}
+                            mode="chapter"
+                            className="mt-2"
+                          />
+                        )}
                       </span>
                       <ChevronDown
                         className={cn(
@@ -794,6 +861,7 @@ export function TopicDetailClient({ topicId }: { topicId: string }) {
                               statuses={statuses}
                               onCycle={onCycle}
                               highlightId={highlightId}
+                              teammatesBySection={teammatesBySection}
                             />
                           ))
                         )}

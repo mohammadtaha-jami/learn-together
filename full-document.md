@@ -580,9 +580,19 @@ Update or delete section node (cascade children per Prisma).
   "membersSummary": [
     { "userId": "...", "name": "...", "percent": 35 }
   ],
+  "teammateProgress": [
+    {
+      "userId": "...",
+      "name": "...",
+      "sectionId": "...",
+      "status": "IN_PROGRESS"
+    }
+  ],
   "leafSectionIds": ["...", "..."]
 }
 ```
+
+`teammateProgress` (team topics only): other members’ leaf statuses that are `IN_PROGRESS` or `DONE` (excludes the current user and `NOT_STARTED`). Empty array for personal topics.
 
 #### `POST /api/progress`
 
